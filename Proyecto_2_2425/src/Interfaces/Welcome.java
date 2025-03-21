@@ -4,6 +4,10 @@
  */
 package Interfaces;
 
+import Funciones.Cargar;
+import java.io.File;
+import javax.swing.JFileChooser;
+
 /**
  *
  * @author Miguel
@@ -62,6 +66,17 @@ public class Welcome extends javax.swing.JFrame {
 
     private void claveCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_claveCargaActionPerformed
         // TODO add your handling code here:
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona un archivo JSON");
+        int resultado = fileChooser.showOpenDialog(this);
+
+        if (resultado == JFileChooser.APPROVE_OPTION) {
+            File archivoSeleccionado = fileChooser.getSelectedFile();
+            String rutaArchivo = archivoSeleccionado.getAbsolutePath();
+
+            // Llamar a la clase CargarJSON para cargar el archivo seleccionado
+            Cargar.cargarClave(rutaArchivo);
+        }
     }//GEN-LAST:event_claveCargaActionPerformed
 
     /**
