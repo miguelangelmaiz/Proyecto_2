@@ -6,17 +6,15 @@ package EDD;
 
 /**
  *
- * @author Miguel
+ * @author aleja
  */
-public class NodoAB {
+public class arbolTransformado {
     private String nombre;
-    private NodoAB si;
-    private NodoAB no;
+    private ListaSimple<Preguntas> camino;
 
-    public NodoAB(String nombre) {
+    public arbolTransformado(String nombre, ListaSimple<Preguntas> camino) {
         this.nombre = nombre;
-        this.si = null;
-        this.no = null;
+        this.camino = camino;
     }
 
     /**
@@ -34,31 +32,16 @@ public class NodoAB {
     }
 
     /**
-     * @return the si
+     * @return the camino
      */
-    public NodoAB getSi() {
-        return si;
+    public ListaSimple<Preguntas> getCamino() {
+        return camino;
     }
 
     /**
-     * @param si the si to set
+     * @param camino the camino to set
      */
-    public void setSi(NodoAB si) {
-        this.si = si;
+    public void setCamino(ListaSimple<Preguntas> camino) {
+        this.camino = camino;
     }
-
-    /**
-     * @return the no
-     */
-    public NodoAB getNo() {
-        return no;
-    }
-
-    /**
-     * @param no the no to set
-     */
-    public void setNo(NodoAB no) {
-        this.no = no;
-    }
-
 }

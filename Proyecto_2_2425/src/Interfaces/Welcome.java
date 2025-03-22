@@ -4,18 +4,29 @@
  */
 package Interfaces;
 
+import EDD.ListaSimple;
+import EDD.Preguntas;
+import EDD.arbolBinario;
+import com.google.gson.Gson;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import java.io.File;
+import java.io.FileReader;
+import javax.swing.JFileChooser;
 /**
  *
  * @author Miguel
  */
 public class Welcome extends javax.swing.JFrame {
+    
+    
 
     /**
      * Creates new form Welcome
      */
     public Welcome() {
         initComponents();
-
+        
         this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -32,8 +43,8 @@ public class Welcome extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        claveCarga = new javax.swing.JButton();
         exit = new javax.swing.JButton();
+        CargarArbol = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -42,27 +53,82 @@ public class Welcome extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Arial Black", 0, 24)); // NOI18N
         jLabel1.setText("Bienvenidos");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, -1, -1));
-
-        claveCarga.setText("Cargar Clave");
-        claveCarga.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                claveCargaActionPerformed(evt);
-            }
-        });
-        jPanel1.add(claveCarga, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 230, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
         exit.setText("Salida");
-        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, -1, -1));
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 120, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 470));
+        CargarArbol.setText("Cargar Arbol");
+        CargarArbol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                CargarArbolActionPerformed(evt);
+            }
+        });
+        jPanel1.add(CargarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 120, -1));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 190));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void claveCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_claveCargaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_claveCargaActionPerformed
+    private void CargarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArbolActionPerformed
+        String clave="";
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Selecciona tu archivo JSON");
+        //fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON", "json"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        int result = fileChooser.showOpenDialog(null);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
+
+            try (FileReader reader = new FileReader(file)) {
+                // Leer el archivo JSON con Gson
+                Gson gson = new Gson();
+                JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
+
+                //JsonArray arbolesTemplados = jsonObject.getAsJsonArray("Arboles templados");
+
+                //Crear instancia del arbol
+                arbolBinario arbol= new arbolBinario();
+                
+                for(String claveTemporal: jsonObject.keySet()){
+                    clave=claveTemporal;
+                    System.out.println("Clave temporal:"+clave);
+                }
+                JsonArray items=jsonObject.getAsJsonArray(clave);
+                
+                for (int i = 0; i < items.size(); i++) {
+                    JsonObject arbolJson = items.get(i).getAsJsonObject();
+                    for (String nombreArbol : arbolJson.keySet()) {
+                        JsonArray caminoArray = arbolJson.getAsJsonArray(nombreArbol);
+
+                        // Crear camino como ListaSimple<Preguntas>
+                        ListaSimple<Preguntas> camino = new ListaSimple<>();
+                        for (int j = 0; j < caminoArray.size(); j++) {
+                            JsonObject preguntaJson = caminoArray.get(j).getAsJsonObject();
+                            for (String pregunta : preguntaJson.keySet()) {
+                                boolean respuesta = preguntaJson.get(pregunta).getAsBoolean();
+                                camino.InsertarFinal(new Preguntas(pregunta, respuesta));
+                            }
+                        }
+
+                        // Construir árbol
+                        arbol.contruirArbol(nombreArbol, camino);
+                    }
+                }
+
+                System.out.println("El árbol se construyó correctamente.");
+                arbol.imprimirArbol();
+            } catch (Exception e) {
+                System.out.println("Error al leer el archivo JSON: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No se seleccionó ningún archivo.");
+        }
+        Interfaz_clave interfaz=new Interfaz_clave();
+        interfaz.setVisible(true);
+    }//GEN-LAST:event_CargarArbolActionPerformed
 
     /**
      * @param args the command line arguments
@@ -100,7 +166,7 @@ public class Welcome extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton claveCarga;
+    private javax.swing.JButton CargarArbol;
     private javax.swing.JButton exit;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;

@@ -10,13 +10,16 @@ import javax.swing.JOptionPane;
  *
  * @author Miguel
  */
-public class ListaSimple {
-    private Nodo pFirst; //nodo apuntador al primero
-    private int size; //tamaño de la lista
+public class ListaSimple <T> {
+   private Nodo<T> pFirst;
+    private Nodo<T> pLast;
+    private int size;
+    
     
     //Constructor de la clase Lista
     public ListaSimple() {
         this.pFirst = null;
+        this.pLast=null;
         this.size = 0; 
     }
     
@@ -52,8 +55,8 @@ public class ListaSimple {
     }
 
     //Metodo para insertar al final
-    public void InsertarFinal(Object dato){
-        Nodo pNew = new Nodo(dato);
+    public void InsertarFinal(T dato){
+        Nodo<T> pNew = new Nodo<>(dato);
         if(EsVacio()){
             pFirst = pNew;
         }else{
@@ -68,7 +71,7 @@ public class ListaSimple {
     
     public void mostrar(){
         if (!EsVacio()){
-            Nodo aux = pFirst;
+            Nodo <T> aux = pFirst;
             String expresion = "Arboles:" + "\n";
             while(aux != null){
                expresion = expresion + aux.getDato().toString() + "\n";
@@ -116,7 +119,7 @@ public class ListaSimple {
     
     // Funcion para buscar un elemento en la lista
     public boolean buscar(Object referencia){
-        Nodo aux = pFirst;
+        Nodo <T> aux = pFirst;
         boolean encontrado = false;
         while(aux != null && encontrado != true){
             if (referencia == aux.getDato()){ 
@@ -127,6 +130,39 @@ public class ListaSimple {
             }
         }
         return encontrado;
+    }
+     public int posicionDato(T valorBuscado) {
+        Nodo<T> actual = this.pFirst;
+        int index = 0;
+
+        while (actual != null) {
+            if (actual.getDato().equals(valorBuscado)) {
+                return index;
+            }
+
+            actual = actual.getPnext();
+            index++;
+        }
+
+        return -1; // Si no se encuentra el valor, devolvemos -1
+    }
+    
+     public T validarIndice(int indece) {
+        Nodo <T> pAux = this.pFirst;
+        int contador = 0;
+
+        while (pAux != null && contador != indece) {
+            pAux = pAux.getPnext();
+            contador++;
+        }
+
+        if (pAux != null) {
+            return pAux.getDato();
+            
+        } else {
+            return null;
+        }
+
     }
     
     //Destructor
