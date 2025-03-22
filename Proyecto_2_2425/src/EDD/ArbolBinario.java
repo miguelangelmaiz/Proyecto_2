@@ -8,110 +8,71 @@ package EDD;
  *
  * @author Miguel
  */
-public class ArbolBinario {
-    private NodoAB nodoRaiz;
-    
-    public ArbolBinario() {
-        this.nodoRaiz = null;
-    }
+public class arbolBinario {
+    private NodoAB raiz;
 
-    public NodoAB getNodoRaiz() {
-        return nodoRaiz;
-    }
+    public arbolBinario() {
+        this.raiz = raiz;
+    }  
 
-    public void setNodoRaiz(NodoAB nodoRaiz) {
-        this.nodoRaiz = nodoRaiz;
-    }
     
-    public boolean esVacio() {
-        return this.getNodoRaiz() == null;
-    }
     
-    public void vaciar() {
-        this.setNodoRaiz(null);
-    }
-    
-    public void insertNodo(NodoAB raiz,int element) {
-        NodoAB node = new NodoAB(element);
-        if (esVacio()) {
-            setNodoRaiz(node);
-        } else {
-            if (element <= (int) raiz.getDato()) {
-                if(raiz.getHijoIzq() == null) {
-                    raiz.setHijoIzq(node);
-                    node.setFather(raiz);
-                } else {
-                    insertNodo(raiz.getHijoIzq(),element);
-                }
-            } else {
-                if(raiz.getHijoDer() == null) {
-                    raiz.setHijoDer(node);
-                    node.setFather(raiz);
-                } else {
-                    insertNodo(raiz.getHijoDer(),element);
-                }
-            }
+    public void contruirArbol(String nombreArbol,ListaSimple<Preguntas> camino){
+        if(camino==null){
+            System.out.println("El camino esta vacio");
         }
-    }
-    
-    public NodoAB buscarNodo(int num, NodoAB root){
-        if(esVacio()){
-            return null;
-        }else{
-            if((int)root.getDato() == num){
-                return root;
-            }else{
-                if(num < (int)root.getDato()){
-                    return buscarNodo(num, root.getHijoIzq());
+        if (this.raiz==null){
+            this.raiz=new NodoAB(camino.validarIndice(0).getPregunta());
+        }
+        NodoAB actual=this.raiz;
+        for(int i=0;i<camino.getSize();i++){
+            Preguntas preguntas=camino.validarIndice(i);
+            boolean respuesta=preguntas.isRespuesta();
+            
+            if(i==camino.getSize()-1){
+                if(respuesta){
+                    if(actual.getSi()==null){
+                        actual.setSi(new NodoAB(null));
+                    }
+                    actual.getSi().setNombre(nombreArbol);
                 }else{
-                    return buscarNodo(num, root.getHijoIzq());
+                    if(actual.getNo()==null){
+                    actual.setNo(new NodoAB(null));
+                    }
+                    actual.getNo().setNombre(nombreArbol);
                 }
+            }else{
+                if(respuesta){
+                if(actual.getSi()==null){
+                    actual.setSi(new NodoAB(camino.validarIndice(i+1).getPregunta()));
+                }
+                actual=actual.getSi();
+                }else{
+                    if(actual.getNo()==null){
+                    actual.setNo(new NodoAB(camino.validarIndice(i+1).getPregunta()));
+                    }
+                    actual=actual.getNo();
+                }
+                
             }
         }
+      
     }
-    
-    public void preOrden(NodoAB root) {
-        if (root != null) {
-            System.out.println("{ "+root.getDato()+" }");
-            preOrden(root.getHijoIzq());
-            preOrden(root.getHijoDer());
-        }
+    public void imprimirArbol() {
+    if (raiz == null) {
+        System.out.println("El árbol está vacío.");
+    } else {
+        imprimirRecursivo(raiz, "");
     }
-    
-    public String preOrden2 (NodoAB root, String cadena){
-        if(root != null){
-            cadena = cadena + root.getDato() + ",";
-            cadena = preOrden2(root.getHijoIzq(), cadena);
-            cadena = preOrden2(root.getHijoDer(), cadena);
-        }
-        
-        return cadena;
-    }
-    
-    public void Lista(NodoAB root, ListaSimple list) {
-        list.InsertarFinal(root.getDato());
-        
-        if(root.getHijoIzq() != null){
-            Lista(root.getHijoIzq(), list);
-        }
-        if(root.getHijoDer() != null){
-            Lista(root.getHijoDer(), list);
-        }   
-    }
-    
-    public void inOrden(NodoAB root) {
-        if (root != null) {
-            preOrden(root.getHijoIzq());
-            System.out.println("{ "+root.getDato()+" }");
-            preOrden(root.getHijoDer());
-        }
-    }
-    
-    public void postOrden(NodoAB root) {
-        if (root != null) {
-            preOrden(root.getHijoIzq());
-            preOrden(root.getHijoDer());
-            System.out.println("{ "+root.getDato()+" }");
+}
+    private void imprimirRecursivo(NodoAB nodo, String prefijo) {
+        if (nodo != null) {
+            // Imprimir el nombre del nodo actual
+            System.out.println(prefijo + "- " + nodo.getNombre());
+
+            // Llamadas recursivas para los nodos 'si' y 'no'
+            imprimirRecursivo(nodo.getSi(), prefijo + "  ");
+            imprimirRecursivo(nodo.getNo(), prefijo + "  ");
         }
     }
     
