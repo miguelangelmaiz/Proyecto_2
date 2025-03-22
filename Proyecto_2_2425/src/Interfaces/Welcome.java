@@ -4,8 +4,12 @@
  */
 package Interfaces;
 
+import EDD.ListaSimple;
+import EDD.Preguntas;
+import EDD.arbolBinario;
 import Funciones.Cargar;
 import java.io.File;
+import java.io.FileReader;
 import javax.swing.JFileChooser;
 
 /**
@@ -65,18 +69,62 @@ public class Welcome extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void claveCargaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_claveCargaActionPerformed
-        // TODO add your handling code here:
+        String clave="";
         JFileChooser fileChooser = new JFileChooser();
-    fileChooser.setDialogTitle("Selecciona un archivo JSON");
-    int resultado = fileChooser.showOpenDialog(this);
+        fileChooser.setDialogTitle("Selecciona tu archivo JSON");
+        //fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON", "json"));
+        fileChooser.setAcceptAllFileFilterUsed(true);
+        int result = fileChooser.showOpenDialog(null);
+        
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File file = fileChooser.getSelectedFile();
 
-    if (resultado == JFileChooser.APPROVE_OPTION) {
-        File archivoSeleccionado = fileChooser.getSelectedFile();
-        String rutaArchivo = archivoSeleccionado.getAbsolutePath();
+            try (FileReader reader = new FileReader(file)) {
+                // Leer el archivo JSON con Gson
+                Gson gson = new Gson();
+                JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
-        // Llamar a la clase Cargar para cargar el archivo seleccionado
-        Cargar.cargarClave(rutaArchivo);
-    }
+                //JsonArray arbolesTemplados = jsonObject.getAsJsonArray("Arboles templados");
+
+                //Crear instancia del arbol
+                arbolBinario arbol= new arbolBinario();
+                
+                for(String claveTemporal: jsonObject.keySet()){
+                    clave=claveTemporal;
+                    System.out.println("Clave temporal:"+clave);
+                }
+                JsonArray items=jsonObject.getAsJsonArray(clave);
+                
+                for (int i = 0; i < items.size(); i++) {
+                    JsonObject arbolJson = items.get(i).getAsJsonObject();
+                    for (String nombreArbol : arbolJson.keySet()) {
+                        JsonArray caminoArray = arbolJson.getAsJsonArray(nombreArbol);
+
+                        // Crear camino como ListaSimple<Preguntas>
+                        ListaSimple<Preguntas> camino = new ListaSimple<>();
+                        for (int j = 0; j < caminoArray.size(); j++) {
+                            JsonObject preguntaJson = caminoArray.get(j).getAsJsonObject();
+                            for (String pregunta : preguntaJson.keySet()) {
+                                boolean respuesta = preguntaJson.get(pregunta).getAsBoolean();
+                                camino.InsertarFinal(new Preguntas(pregunta, respuesta));
+                            }
+                        }
+
+                        // Construir árbol
+                        arbol.contruirArbol(nombreArbol, camino);
+                    }
+                }
+
+                System.out.println("El árbol se construyó correctamente.");
+                arbol.imprimirArbol();
+            } catch (Exception e) {
+                System.out.println("Error al leer el archivo JSON: " + e.getMessage());
+            }
+        } else {
+            System.out.println("No se seleccionó ningún archivo.");
+        }
+        Interfaz_clave interfaz=new Interfaz_clave();
+        interfaz.setVisible(true);
     }//GEN-LAST:event_claveCargaActionPerformed
 
     /**
