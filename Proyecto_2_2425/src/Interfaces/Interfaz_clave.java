@@ -13,11 +13,13 @@ import javax.swing.JOptionPane;
  * @author Miguel
  */
 public class Interfaz_clave extends javax.swing.JFrame {
+    private arbolBinario arbol;
 
     /**
      * Creates new form Interfaz_clave
      */
-    public Interfaz_clave() {
+    public Interfaz_clave(arbolBinario arbol) {
+        this.arbol = arbol; // Asignar el árbol recibido
         initComponents();
         this.setVisible(true);
         this.setResizable(false);
@@ -73,8 +75,7 @@ public class Interfaz_clave extends javax.swing.JFrame {
     private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
         if (!planta.getText().isEmpty()) {
             String plantabusqueda = planta.getText();
-            arbolBinario arbolFinalizado = new arbolBinario();
-            arbolFinalizado.inOrden(plantabusqueda);
+            arbol.inOrden(plantabusqueda);
             
             
         }else{
