@@ -113,21 +113,22 @@ public class Welcome extends javax.swing.JFrame {
                             }
                         }
 
-                        // Construir árbol
+                        // Construir arbol
                         arbol.contruirArbol(nombreArbol, camino);
                     }
                 }
 
                 System.out.println("El árbol se construyó correctamente.");
-                arbol.imprimirArbol();
+                Interfaz_clave interfaz=new Interfaz_clave(arbol);
+                interfaz.setVisible(true);
+                //arbol.imprimirArbol();
             } catch (Exception e) {
                 System.out.println("Error al leer el archivo JSON: " + e.getMessage());
             }
         } else {
             System.out.println("No se seleccionó ningún archivo.");
         }
-        Interfaz_clave interfaz=new Interfaz_clave();
-        interfaz.setVisible(true);
+        
     }//GEN-LAST:event_CargarArbolActionPerformed
 
     /**

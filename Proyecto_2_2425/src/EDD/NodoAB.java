@@ -12,6 +12,7 @@ public class NodoAB {
     private String nombre;
     private NodoAB si;
     private NodoAB no;
+    private ListaSimple<Preguntas>camino;
 
     public NodoAB(String nombre) {
         this.nombre = nombre;
@@ -59,6 +60,20 @@ public class NodoAB {
      */
     public void setNo(NodoAB no) {
         this.no = no;
+    }
+
+    /**
+     * @return the camino
+     */
+    public ListaSimple<Preguntas> getCamino() {
+        return camino;
+    }
+
+    /**
+     * @param camino the camino to set
+     */
+    public void setCamino(ListaSimple<Preguntas> camino) {
+        this.camino = camino;
     }
 
 }

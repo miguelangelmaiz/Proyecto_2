@@ -100,7 +100,7 @@ public class ListaSimple <T> {
     }
     
     //Metodo para obtener el valor de un nodo en una determinada posición
-    public Object getValor(int posicion){
+    public T getValor(int posicion){
 
         if(posicion>=0 && posicion<size){
             
@@ -111,14 +111,14 @@ public class ListaSimple <T> {
                 for (int i = 0; i < posicion; i++) {
                     aux = aux.getPnext();
                 }
-                return aux.getDato();
+                return (T) aux.getDato();
             }
         }
         return null;
     }
     
     // Funcion para buscar un elemento en la lista
-    public boolean buscar(Object referencia){
+    public boolean buscar(T referencia){
         Nodo <T> aux = pFirst;
         boolean encontrado = false;
         while(aux != null && encontrado != true){

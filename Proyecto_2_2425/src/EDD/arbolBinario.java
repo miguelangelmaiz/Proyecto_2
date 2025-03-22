@@ -4,6 +4,10 @@
  */
 package EDD;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import EDD.arbolTransformado;
 /**
  *
  * @author aleja
@@ -13,11 +17,10 @@ public class arbolBinario {
 
     public arbolBinario() {
         this.raiz = raiz;
-    }  
+    }
 
     
-    
-    public void contruirArbol(String nombreArbol,ListaSimple<Preguntas> camino){
+public void contruirArbol(String nombreArbol,ListaSimple<Preguntas> camino){
         if(camino==null){
             System.out.println("El camino esta vacio");
         }
@@ -58,6 +61,59 @@ public class arbolBinario {
         }
       
     }
+//Metodo para     
+public void identificarEspecie(){
+    if(raiz==null){
+        System.out.println("El árbol está vacío.");
+    }
+    NodoAB actual=raiz;
+    BufferedReader reader= new BufferedReader(new InputStreamReader(System.in));
+        try{while(actual!=null){
+            if(actual.getNombre()!=null){
+                System.out.println("La especie identificada es:"+ actual.getNombre());
+                return;
+            }
+            ListaSimple<Preguntas> camino=actual.getCamino();
+            boolean validarCamino=true;
+
+            for(int i=0;i<camino.getSize();i++){
+               Preguntas pregunta=camino.getValor(i);
+               System.out.println(pregunta.getPregunta()+"(si/no)");
+               String respuesta=reader.readLine().trim().toLowerCase();
+
+               boolean validarRespuesta=false;
+                if(respuesta.equals("si")){
+                   validarRespuesta=true;
+                }else if (respuesta.equals("no")){
+                    validarRespuesta=false;
+                }else{
+                   //mendaje de error para respuestas no validas
+                   System.out.println("Dato invalido porfa responde 'si' o 'no'"+
+                           "\nNota:no escriir ni puntos ni espacio");
+                   i--;
+                   continue;
+                }
+
+                if(validarRespuesta!=pregunta.isRespuesta()){
+                   validarCamino=false;
+                   break;
+                }
+            }
+                if(validarCamino==true){
+                    actual.getSi();
+                }else{
+                    actual=actual.getNo();
+                }  
+        }
+        System.out.println("No se pudo encontrar un especie con esas "
+                + "caracteristicas");
+    }
+    catch(IOException e){
+        System.out.println("Error al leer la entrada del usuario"+e.getMessage());
+    }
+}
+    
+    
     public void imprimirArbol() {
     if (raiz == null) {
         System.out.println("El árbol está vacío.");
