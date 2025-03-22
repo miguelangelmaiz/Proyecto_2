@@ -30,11 +30,36 @@ public class Interfaz_clave extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
+        jButton1 = new javax.swing.JButton();
+        busqueda = new javax.swing.JButton();
+        InOrden = new javax.swing.JRadioButton();
+        Hash = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, 180));
+
+        jButton1.setText("jButton1");
+        jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+
+        busqueda.setText("Busqueda");
+        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
+
+        InOrden.setText("Inorden");
+        jPanel1.add(InOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
+
+        Hash.setText("Hash");
+        jPanel1.add(Hash, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 360));
 
         pack();
@@ -76,6 +101,12 @@ public class Interfaz_clave extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JRadioButton Hash;
+    private javax.swing.JRadioButton InOrden;
+    private javax.swing.JButton busqueda;
+    private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
 }
