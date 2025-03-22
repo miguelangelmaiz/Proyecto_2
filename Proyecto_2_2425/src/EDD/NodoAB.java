@@ -9,51 +9,57 @@ package EDD;
  * @author Miguel
  */
 public class NodoAB {
-    private Object dato;
-    private NodoAB HijoIzq;
-    private NodoAB HijoDer;
-    private NodoAB father;
-
-    public NodoAB(Object dato) {
-        this.dato = dato;
-        this.HijoDer = this.HijoIzq = this.father = null;
-    }
     
-    public NodoAB() {
-        this.dato = null;
-        this.HijoDer = this.HijoIzq = this.father = null;
+    private String nombre;
+    private NodoAB si;
+    private NodoAB no;
+
+    public NodoAB(String nombre) {
+        this.nombre = nombre;
+        this.si = null;
+        this.no = null;
     }
 
-    public Object getDato() {
-        return dato;
+    /**
+     * @return the nombre
+     */
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setDato(Object dato) {
-        this.dato = dato;
+    /**
+     * @param nombre the nombre to set
+     */
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public NodoAB getHijoIzq() {
-        return HijoIzq;
+    /**
+     * @return the si
+     */
+    public NodoAB getSi() {
+        return si;
     }
 
-    public void setHijoIzq(NodoAB HijoIzq) {
-        this.HijoIzq = HijoIzq;
+    /**
+     * @param si the si to set
+     */
+    public void setSi(NodoAB si) {
+        this.si = si;
     }
 
-    public NodoAB getHijoDer() {
-        return HijoDer;
+    /**
+     * @return the no
+     */
+    public NodoAB getNo() {
+        return no;
     }
 
-    public void setHijoDer(NodoAB HijoDer) {
-        this.HijoDer = HijoDer;
-    }
-
-    public NodoAB getFather() {
-        return father;
-    }
-
-    public void setFather(NodoAB father) {
-        this.father = father;
+    /**
+     * @param no the no to set
+     */
+    public void setNo(NodoAB no) {
+        this.no = no;
     }
 }
     
