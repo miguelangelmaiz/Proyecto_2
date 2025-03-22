@@ -64,19 +64,19 @@ public class arbolBinario {
     public void inOrden(String nombreNodo) {
     NodoAB nodo = buscarNodo(raiz, nombreNodo); // Buscar nodo por nombre
     if (nodo != null) {
-        StringBuilder resultado = new StringBuilder();
+        ListaSimple resultado = new ListaSimple();
         recorrerInOrden(nodo, resultado);
-        JOptionPane.showMessageDialog(null, resultado.toString(), "Recorrido InOrden", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, resultado.toString());
     } else {
-        JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo, "Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo);
     }
 }
 
 // Método para recorrer el árbol en InOrden
-private void recorrerInOrden(NodoAB nodo, StringBuilder resultado) {
+private void recorrerInOrden(NodoAB nodo, ListaSimple resultado) {
     if (nodo != null) {
         recorrerInOrden(nodo.getSi(), resultado);
-        resultado.append(nodo.getNombre()).append("\n"); // Acumula el nodo en el StringBuilder
+        resultado.InsertarFinal(nodo.getNombre()); // Acumula el nodo en el StringBuilder
         recorrerInOrden(nodo.getNo(), resultado);
     }
 }
