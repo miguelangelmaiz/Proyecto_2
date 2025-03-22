@@ -48,22 +48,49 @@ public class Interfaz_clave extends javax.swing.JFrame {
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, 180));
 
-        jButton1.setText("jButton1");
+        jButton1.setText("Esta es tu planta");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
         busqueda.setText("Busqueda");
-        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
+        busqueda.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                busquedaActionPerformed(evt);
+            }
+        });
+        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         InOrden.setText("Inorden");
-        jPanel1.add(InOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
+        InOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                InOrdenActionPerformed(evt);
+            }
+        });
+        jPanel1.add(InOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
 
         Hash.setText("Hash");
-        jPanel1.add(Hash, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, -1, -1));
+        Hash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HashActionPerformed(evt);
+            }
+        });
+        jPanel1.add(Hash, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, -1, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 470, 360));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void InOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InOrdenActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_InOrdenActionPerformed
+
+    private void HashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HashActionPerformed
+
+    private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_busquedaActionPerformed
 
     /**
      * @param args the command line arguments

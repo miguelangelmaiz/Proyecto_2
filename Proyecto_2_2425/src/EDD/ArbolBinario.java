@@ -4,6 +4,8 @@
  */
 package EDD;
 
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Miguel
@@ -58,6 +60,44 @@ public class arbolBinario {
         }
       
     }
+    
+    public void inOrden(String nombreNodo) {
+    NodoAB nodo = buscarNodo(raiz, nombreNodo); // Buscar nodo por nombre
+    if (nodo != null) {
+        StringBuilder resultado = new StringBuilder();
+        recorrerInOrden(nodo, resultado);
+        JOptionPane.showMessageDialog(null, resultado.toString(), "Recorrido InOrden", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+        JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+
+// Método para recorrer el árbol en InOrden
+private void recorrerInOrden(NodoAB nodo, StringBuilder resultado) {
+    if (nodo != null) {
+        recorrerInOrden(nodo.getSi(), resultado);
+        resultado.append(nodo.getNombre()).append("\n"); // Acumula el nodo en el StringBuilder
+        recorrerInOrden(nodo.getNo(), resultado);
+    }
+}
+
+// Método para buscar un nodo por su nombre
+private NodoAB buscarNodo(NodoAB nodo, String nombre) {
+    if (nodo == null) {
+        return null; // Si el nodo es nulo, retornar null
+    }
+    if (nombre.equals(nodo.getNombre())) {
+        return nodo; // Si el nombre coincide, retornar el nodo
+    }
+    
+    // Buscar en los subárboles izquierdo y derecho
+    NodoAB encontrado = buscarNodo(nodo.getSi(), nombre);
+    if (encontrado == null) {
+        encontrado = buscarNodo(nodo.getNo(), nombre);
+    }
+    return encontrado;
+}
+    
     public void imprimirArbol() {
     if (raiz == null) {
         System.out.println("El árbol está vacío.");
