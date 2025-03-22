@@ -4,6 +4,10 @@
  */
 package Interfaces;
 
+import EDD.ListaSimple;
+import EDD.arbolBinario;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Miguel
@@ -31,65 +35,53 @@ public class Interfaz_clave extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        planta = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
         busqueda = new javax.swing.JButton();
-        InOrden = new javax.swing.JRadioButton();
-        Hash = new javax.swing.JRadioButton();
+        busquedaHash = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        planta.setColumns(20);
+        planta.setRows(5);
+        jScrollPane1.setViewportView(planta);
 
         jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, -1, 180));
 
         jButton1.setText("Esta es tu planta");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        busqueda.setText("Busqueda");
+        busqueda.setText("Busqueda Inorden");
         busqueda.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 busquedaActionPerformed(evt);
             }
         });
-        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
-        InOrden.setText("Inorden");
-        InOrden.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                InOrdenActionPerformed(evt);
-            }
-        });
-        jPanel1.add(InOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
-
-        Hash.setText("Hash");
-        Hash.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                HashActionPerformed(evt);
-            }
-        });
-        jPanel1.add(Hash, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 290, -1, -1));
+        busquedaHash.setText("Busqueda Hash");
+        jPanel1.add(busquedaHash, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 580));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void InOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_InOrdenActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_InOrdenActionPerformed
-
-    private void HashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_HashActionPerformed
-
     private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
-        // TODO add your handling code here:
+        if (!planta.getText().isEmpty()) {
+            String plantabusqueda = planta.getText();
+            arbolBinario arbolFinalizado = new arbolBinario();
+            arbolFinalizado.inOrden(plantabusqueda);
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null,"Tienes que presionar el Boton de mostrar tu planta" );
+        
+        
+        }
     }//GEN-LAST:event_busquedaActionPerformed
 
     /**
@@ -128,12 +120,11 @@ public class Interfaz_clave extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JRadioButton Hash;
-    private javax.swing.JRadioButton InOrden;
     private javax.swing.JButton busqueda;
+    private javax.swing.JButton busquedaHash;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea planta;
     // End of variables declaration//GEN-END:variables
 }

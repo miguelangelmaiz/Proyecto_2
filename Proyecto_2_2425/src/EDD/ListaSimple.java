@@ -170,4 +170,7 @@ public class ListaSimple<T> {
         pFirst = null;
         size = 0;
     }
+
+    
+    
 }
