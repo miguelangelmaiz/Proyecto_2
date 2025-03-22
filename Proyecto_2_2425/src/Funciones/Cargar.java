@@ -4,6 +4,7 @@
  */
 package Funciones;
 
+import com.google.gson.Gson;
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;
