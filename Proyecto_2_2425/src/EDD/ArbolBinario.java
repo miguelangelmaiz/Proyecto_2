@@ -65,20 +65,34 @@ public class arbolBinario {
     NodoAB nodo = buscarNodo(raiz, nombreNodo); // Buscar nodo por nombre
     if (nodo != null) {
         ListaSimple resultado = new ListaSimple();
-        recorrerInOrden(nodo, resultado);
-        JOptionPane.showMessageDialog(null, resultado.toString());
+        recorrerInOrden(raiz, resultado, nodo);
+        JOptionPane.showMessageDialog(null, resultado.mostrar(nombreNodo));
     } else {
         JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo);
     }
 }
 
 // Método para recorrer el árbol en InOrden
-private void recorrerInOrden(NodoAB nodo, ListaSimple resultado) {
-    if (nodo != null) {
-        recorrerInOrden(nodo.getSi(), resultado);
-        resultado.InsertarFinal(nodo.getNombre()); // Acumula el nodo en el StringBuilder
-        recorrerInOrden(nodo.getNo(), resultado);
+private void recorrerInOrden(NodoAB nodo, ListaSimple resultado, NodoAB nombreSrt) {
+   if (nodo == null) {
+        return; // Evita llamadas innecesarias
     }
+
+    // Primero, recorrer el subárbol izquierdo si aún no hemos encontrado el nodo buscado
+    if (nodo != nombreSrt) {
+        recorrerInOrden(nodo.getSi(), resultado, nombreSrt);
+    }
+
+    // Agregar el nodo actual a la lista si aún no hemos alcanzado el nodo buscado
+    resultado.InsertarFinal(nodo.getNombre());
+
+    // Si hemos llegado al nodo buscado, detener el recorrido
+    if (nodo == nombreSrt) {
+        return;
+    }
+
+    // Luego, recorrer el subárbol derecho si aún no hemos encontrado el nodo buscado
+    recorrerInOrden(nodo.getNo(), resultado, nombreSrt);
 }
 
 // Método para buscar un nodo por su nombre

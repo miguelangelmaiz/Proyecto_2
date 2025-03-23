@@ -14,13 +14,22 @@ import javax.swing.JOptionPane;
  */
 public class Interfaz_clave extends javax.swing.JFrame {
     private arbolBinario arbol;
+    
+    public Interfaz_clave() { // Constructor vacío para evitar el error
+        this.arbol = new arbolBinario(); // Se inicializa un árbol vacío para evitar NullPointerException
+        initComponents();
+        this.setVisible(true);
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+    }
 
     /**
      * Creates new form Interfaz_clave
      */
     public Interfaz_clave(arbolBinario arbol) {
-        this.arbol = arbol; // Asignar el árbol recibido
+         
         initComponents();
+        this.arbol = arbol;// Asignar el árbol recibido
         this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
