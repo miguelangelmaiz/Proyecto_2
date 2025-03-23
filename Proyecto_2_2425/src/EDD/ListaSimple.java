@@ -70,20 +70,29 @@ public class ListaSimple <T> {
     }
     
     //para mostrar la lista
-    public void mostrar(){
-        if (!EsVacio()){
-            Nodo <T> aux = pFirst;
-            String expresion = "Arboles:" + "\n";
-            while(aux != null){
-               expresion = expresion + aux.getDato().toString() + "\n";
-               aux = aux.getPnext();
+     public String mostrar(String nodoNombre) {
+    if (!EsVacio()) {
+        Nodo<T> aux = pFirst;
+        String expresion = "Árboles:\n";
+
+        while (aux != null) {
+            String dato = aux.getDato().toString();
+            expresion = expresion + dato + "\n"; // Concatenación tradicional
+
+            // Si encontramos el nodo buscado, detenemos el recorrido
+            if (dato.equals(nodoNombre)) {
+                break;
             }
-            JOptionPane.showMessageDialog(null,expresion);
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "La lista esta vacia");
+
+            aux = aux.getPnext();
         }
+
+        return expresion;
+    } else {
+        JOptionPane.showMessageDialog(null, "La lista está vacía");
+        return null;
     }
+}
     
     //Para eliminar
     public void Eliminar_Final(){

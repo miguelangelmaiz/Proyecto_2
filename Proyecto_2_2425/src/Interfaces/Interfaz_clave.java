@@ -8,6 +8,7 @@ import EDD.NodoAB;
 import EDD.arbolBinario;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -50,11 +51,11 @@ public class Interfaz_clave extends javax.swing.JFrame {
         Especie = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        planta = new javax.swing.JTextArea();
         BotonSi = new javax.swing.JButton();
         BotonNo = new javax.swing.JButton();
+        inOrden = new javax.swing.JButton();
+        Hash = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -86,17 +87,11 @@ public class Interfaz_clave extends javax.swing.JFrame {
         });
         getContentPane().add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 220, -1, -1));
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        planta.setColumns(20);
+        planta.setRows(5);
+        jScrollPane1.setViewportView(planta);
 
         getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 40, 350, -1));
-
-        jRadioButton1.setText("Hash");
-        getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 140, 20));
-
-        jRadioButton2.setText("InOrden");
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
 
         BotonSi.setText("Si");
         BotonSi.addActionListener(new java.awt.event.ActionListener() {
@@ -113,6 +108,22 @@ public class Interfaz_clave extends javax.swing.JFrame {
             }
         });
         getContentPane().add(BotonNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
+
+        inOrden.setText("inOrden");
+        inOrden.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                inOrdenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(inOrden, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, -1, -1));
+
+        Hash.setText("Hash");
+        Hash.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                HashActionPerformed(evt);
+            }
+        });
+        getContentPane().add(Hash, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 240, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -135,6 +146,27 @@ public class Interfaz_clave extends javax.swing.JFrame {
     private void BotonNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_BotonNoActionPerformed
+
+    private void HashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_HashActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_HashActionPerformed
+
+    private void inOrdenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_inOrdenActionPerformed
+        if (!planta.getText().isEmpty()) {
+            long tiempoInicial = System.nanoTime();
+            String plantabusqueda = planta.getText();
+            arbol.inOrden(plantabusqueda);
+            long tiempoFinal = System.nanoTime();
+            long duracion = tiempoFinal- tiempoInicial;
+            JOptionPane.showMessageDialog(null, "El tiempo que duro la funcion fue : "+ duracion );
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(null,"Tienes que presionar el Boton de mostrar tu planta" );
+        
+        
+        }
+    }//GEN-LAST:event_inOrdenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -180,17 +212,17 @@ public class Interfaz_clave extends javax.swing.JFrame {
     private javax.swing.JButton BotonNo;
     private javax.swing.JButton BotonSi;
     private javax.swing.JButton Especie;
+    private javax.swing.JButton Hash;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JButton inOrden;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JTextArea planta;
     // End of variables declaration//GEN-END:variables
 }

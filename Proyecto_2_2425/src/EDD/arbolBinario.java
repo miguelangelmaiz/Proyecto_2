@@ -128,6 +128,60 @@ public class arbolBinario {
     
            
     }}
-
     
+    public void inOrden(String nombreNodo) {
+    
+    NodoAB nodo = buscarNodo(raiz, nombreNodo); // Buscar nodo por nombre
+    if (nodo != null) {
+        ListaSimple resultado = new ListaSimple();
+        recorrerInOrden(raiz, resultado, nodo);
+        
+        JOptionPane.showMessageDialog(null, resultado.mostrar(nombreNodo));
+        
+    } else {
+        JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo);
+        
+        
+    }
+}
+
+// Metodo para recorrer el árbol en InOrden
+private void recorrerInOrden(NodoAB nodo, ListaSimple resultado, NodoAB nombreSrt) {
+   if (nodo == null) {
+        return; // Evita llamadas innecesarias
+    }
+
+    // Primero, recorrer el subarbol izquierdo si aun no hemos encontrado el nodo buscado
+    if (nodo != nombreSrt) {
+        recorrerInOrden(nodo.getSi(), resultado, nombreSrt);
+    }
+
+    // Agregar el nodo actual a la lista si aun no hemos alcanzado el nodo buscado
+    resultado.InsertarFinal(nodo.getNombre());
+
+    // Si hemos llegado al nodo buscado, detener el recorrido
+    if (nodo == nombreSrt) {
+        return;
+    }
+
+    // Luego, recorrer el subarbol derecho si aun no hemos encontrado el nodo buscado
+    recorrerInOrden(nodo.getNo(), resultado, nombreSrt);
+}
+
+// Metodo para buscar un nodo por su nombre
+private NodoAB buscarNodo(NodoAB nodo, String nombre) {
+    if (nodo == null) {
+        return null; // Si el nodo es nulo, retornar null
+    }
+    if (nombre.equals(nodo.getNombre())) {
+        return nodo; // Si el nombre coincide, retornar el nodo
+    }
+    
+    // Buscar en los subarboles izquierdo y derecho
+    NodoAB encontrado = buscarNodo(nodo.getSi(), nombre);
+    if (encontrado == null) {
+        encontrado = buscarNodo(nodo.getNo(), nombre);
+    }
+    return encontrado;
+}  
 }
