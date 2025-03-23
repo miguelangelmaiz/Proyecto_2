@@ -48,7 +48,7 @@ public class Interfaz_clave extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         planta = new javax.swing.JTextArea();
         jButton1 = new javax.swing.JButton();
-        busqueda = new javax.swing.JButton();
+        busquedaInorden = new javax.swing.JButton();
         busquedaHash = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -65,13 +65,13 @@ public class Interfaz_clave extends javax.swing.JFrame {
         jButton1.setText("Esta es tu planta");
         jPanel1.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
 
-        busqueda.setText("Busqueda Inorden");
-        busqueda.addActionListener(new java.awt.event.ActionListener() {
+        busquedaInorden.setText("Busqueda Inorden");
+        busquedaInorden.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                busquedaActionPerformed(evt);
+                busquedaInordenActionPerformed(evt);
             }
         });
-        jPanel1.add(busqueda, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
+        jPanel1.add(busquedaInorden, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, -1));
 
         busquedaHash.setText("Busqueda Hash");
         jPanel1.add(busquedaHash, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 360, -1, -1));
@@ -81,10 +81,14 @@ public class Interfaz_clave extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void busquedaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaActionPerformed
+    private void busquedaInordenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_busquedaInordenActionPerformed
         if (!planta.getText().isEmpty()) {
+            long tiempoInicial = System.nanoTime();
             String plantabusqueda = planta.getText();
             arbol.inOrden(plantabusqueda);
+            long tiempoFinal = System.nanoTime();
+            long duracion = tiempoFinal- tiempoInicial;
+            JOptionPane.showMessageDialog(null, "El tiempo que duro la funcion fue : "+ duracion );
             
             
         }else{
@@ -92,7 +96,7 @@ public class Interfaz_clave extends javax.swing.JFrame {
         
         
         }
-    }//GEN-LAST:event_busquedaActionPerformed
+    }//GEN-LAST:event_busquedaInordenActionPerformed
 
     /**
      * @param args the command line arguments
@@ -130,8 +134,8 @@ public class Interfaz_clave extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton busqueda;
     private javax.swing.JButton busquedaHash;
+    private javax.swing.JButton busquedaInorden;
     private javax.swing.JButton jButton1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;

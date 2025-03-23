@@ -62,13 +62,18 @@ public class arbolBinario {
     }
     
     public void inOrden(String nombreNodo) {
+    
     NodoAB nodo = buscarNodo(raiz, nombreNodo); // Buscar nodo por nombre
     if (nodo != null) {
         ListaSimple resultado = new ListaSimple();
         recorrerInOrden(raiz, resultado, nodo);
+        
         JOptionPane.showMessageDialog(null, resultado.mostrar(nombreNodo));
+        
     } else {
         JOptionPane.showMessageDialog(null, "Nodo no encontrado: " + nombreNodo);
+        
+        
     }
 }
 
