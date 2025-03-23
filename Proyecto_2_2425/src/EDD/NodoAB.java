@@ -9,11 +9,21 @@ package EDD;
  * @author Miguel
  */
 public class NodoAB {
-    private String nombre;
-    private NodoAB si;
-    private NodoAB no;
-    private ListaSimple<Preguntas>camino;
+    private String nombre;//nombre del nodo si es una hoja
+    private NodoAB si;//si nodo izquierdo
+    private NodoAB no;//si nodo derecho 
+    private ListaSimple<Preguntas>camino;/*lista de preguntas asociadas 
+    al nodo hoja (nodo intermedios)*/
 
+    //constructor de la clase
+    public NodoAB(String nombre,ListaSimple<Preguntas>camino) {
+        this.nombre = nombre;
+        this.camino=camino;
+        this.si = null;
+        this.no = null;
+    }
+    
+    //constructor de la clase sin lista de preguntas asocidas
     public NodoAB(String nombre) {
         this.nombre = nombre;
         this.si = null;

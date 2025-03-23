@@ -9,7 +9,7 @@ package EDD;
  * @author Miguel
  */
 public class Nodo<T> {
-    private T dato; //Variable donde se guardará el valor
+    private T dato; //Variable donde se guardara el valor
     private Nodo pnext; //Variable para enlazar los nodos
     
     //Constructor vacio

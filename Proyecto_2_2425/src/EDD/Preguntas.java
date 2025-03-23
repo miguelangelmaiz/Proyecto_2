@@ -9,6 +9,11 @@ package EDD;
  * @author aleja
  */
 public class Preguntas {
+
+    @Override
+    public String toString() {
+        return "Preguntas{" + "pregunta=" + pregunta + ", respuesta=" + respuesta + '}';
+    }
     private String pregunta;
     private boolean respuesta;
 

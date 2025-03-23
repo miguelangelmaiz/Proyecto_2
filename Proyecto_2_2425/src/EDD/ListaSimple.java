@@ -11,9 +11,9 @@ import javax.swing.JOptionPane;
  * @author Miguel
  */
 public class ListaSimple <T> {
-   private Nodo<T> pFirst;
-    private Nodo<T> pLast;
-    private int size;
+   private Nodo<T> pFirst;//primer nodo de la lista
+    private Nodo<T> pLast;//ultimo nodo de la lista
+    private int size;//tamano de la lista
     
     
     //Constructor de la clase Lista
@@ -60,7 +60,7 @@ public class ListaSimple <T> {
         if(EsVacio()){
             pFirst = pNew;
         }else{
-            Nodo aux = pFirst;
+            Nodo <T> aux = pFirst;
             while (aux.getPnext() != null){
                 aux = aux.getPnext();
             }
@@ -69,6 +69,7 @@ public class ListaSimple <T> {
         size++;
     }
     
+    //para mostrar la lista
     public void mostrar(){
         if (!EsVacio()){
             Nodo <T> aux = pFirst;
@@ -84,6 +85,7 @@ public class ListaSimple <T> {
         }
     }
     
+    //Para eliminar
     public void Eliminar_Final(){
         if(!EsVacio()){
             if (getSize()==1) {
@@ -131,6 +133,7 @@ public class ListaSimple <T> {
         }
         return encontrado;
     }
+    //posicion del dato a buscar
      public int posicionDato(T valorBuscado) {
         Nodo<T> actual = this.pFirst;
         int index = 0;
@@ -146,7 +149,8 @@ public class ListaSimple <T> {
 
         return -1; // Si no se encuentra el valor, devolvemos -1
     }
-    
+     
+    //validar el indice 
      public T validarIndice(int indece) {
         Nodo <T> pAux = this.pFirst;
         int contador = 0;
@@ -164,7 +168,19 @@ public class ListaSimple <T> {
         }
 
     }
-    
+     
+    //imprimir la lista 
+    public void Imprimir(){
+       if(!EsVacio()){
+            Nodo <T> pAux = this.pFirst;
+            for (int i=0 ;i<size;i++){
+                System.out.println(pAux.getDato()+"");
+                pAux=pAux.getPnext();
+            }
+    }else{ System.out.println("Lista vacia");}
+
+    }
+     
     //Destructor
     public void eliminar(){
         pFirst = null;

@@ -56,7 +56,7 @@ public class Welcome extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, -1));
 
         exit.setText("Salida");
-        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 120, -1));
+        jPanel1.add(exit, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 130, 120, -1));
 
         CargarArbol.setText("Cargar Arbol");
         CargarArbol.addActionListener(new java.awt.event.ActionListener() {
@@ -64,67 +64,107 @@ public class Welcome extends javax.swing.JFrame {
                 CargarArbolActionPerformed(evt);
             }
         });
-        jPanel1.add(CargarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 120, -1));
+        jPanel1.add(CargarArbol, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 80, 120, -1));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 390, 190));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 210));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void CargarArbolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_CargarArbolActionPerformed
+        //Variable para almacenar la clave
         String clave="";
+        //Crear un JFileChooser que permite seleccioanr el archivo
         JFileChooser fileChooser = new JFileChooser();
+        //cuadro de dialogo
         fileChooser.setDialogTitle("Selecciona tu archivo JSON");
-        //fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos JSON", "json"));
+        
+        //permite seleccionar cualquier tipo de archivo
         fileChooser.setAcceptAllFileFilterUsed(true);
+        
+        //obtiene lo que hizo el usario 
         int result = fileChooser.showOpenDialog(null);
         
+        //verifica que sea un archivo 
         if (result == JFileChooser.APPROVE_OPTION) {
+            //obtiene el archivo seleccionado 
             File file = fileChooser.getSelectedFile();
 
+            //abre el archivo seleccionado
             try (FileReader reader = new FileReader(file)) {
                 // Leer el archivo JSON con Gson
-                Gson gson = new Gson();
+                Gson gson = new Gson();//crea el objeto Gson
+                //convierte el contenido del Json a un JsonObject
                 JsonObject jsonObject = gson.fromJson(reader, JsonObject.class);
 
-                //JsonArray arbolesTemplados = jsonObject.getAsJsonArray("Arboles templados");
+                
 
                 //Crear instancia del arbol
                 arbolBinario arbol= new arbolBinario();
                 
+                //Aqui se obtienen las claves principales del Json
                 for(String claveTemporal: jsonObject.keySet()){
+                    //se asigna la clave temporal
                     clave=claveTemporal;
+                    //imprime la clave
                     System.out.println("Clave temporal:"+clave);
                 }
+                //Se obtiene el array asociado a la clave
                 JsonArray items=jsonObject.getAsJsonArray(clave);
                 
+                //recorre los elementos del array
                 for (int i = 0; i < items.size(); i++) {
+                    
+                    /*como cada elemento es un objecto,recorremos sobre las 
+                    claves del objeto del arbol(cada clave es el nombre de una especie),
+                    la variable nombreArbol almacena temporalmente cada objeto y 
+                    despues se para obtener el array de las  preguntas 
+                    asociadas a esa especie(objeto)
+                    */
                     JsonObject arbolJson = items.get(i).getAsJsonObject();
                     for (String nombreArbol : arbolJson.keySet()) {
                         JsonArray caminoArray = arbolJson.getAsJsonArray(nombreArbol);
 
                         // Crear camino como ListaSimple<Preguntas>
                         ListaSimple<Preguntas> camino = new ListaSimple<>();
+                        
+                        //recorremos las preguntas
                         for (int j = 0; j < caminoArray.size(); j++) {
+                            //cada elemnto es una pregunta
                             JsonObject preguntaJson = caminoArray.get(j).getAsJsonObject();
+                            //recorremos los nombre de las preguntas
                             for (String pregunta : preguntaJson.keySet()) {
+                                //obtenemos la respuesta
                                 boolean respuesta = preguntaJson.get(pregunta).getAsBoolean();
+                                //insertamos pregunta y respuesta 
                                 camino.InsertarFinal(new Preguntas(pregunta, respuesta));
                             }
                         }
 
-                        // Construir arbol
+                        //verifica si el camino esta vacio
+                        if(camino.getSize()==0){
+                        //System.out.println("camino vacio crear nodo hoja"+nombreArbol);
+                        
+                        //Al arbol se le pasa la especie y las preguntas
                         arbol.contruirArbol(nombreArbol, camino);
+                        }else{
+                            
+                            ////Al arbol se le pasa la especie y las preguntas
+                            arbol.contruirArbol(nombreArbol, camino);
+                        }
                     }
                 }
-
-                System.out.println("El árbol se construyó correctamente.");
+                //le muestra al usario que se construyo el arbol
+                System.out.println("El arbol se construyo correctamente.");
+                //se crea una nueva interfaz que se le pasa el arbol creado 
                 Interfaz_clave interfaz=new Interfaz_clave(arbol);
+                //se hace visible 
                 interfaz.setVisible(true);
-                //arbol.imprimirArbol();
+             //si ocurre cualquier error    
             } catch (Exception e) {
                 System.out.println("Error al leer el archivo JSON: " + e.getMessage());
             }
+            //si no selecciono ningun archivo
         } else {
             System.out.println("No se seleccionó ningún archivo.");
         }

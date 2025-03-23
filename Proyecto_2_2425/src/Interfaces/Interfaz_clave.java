@@ -4,23 +4,31 @@
  */
 package Interfaces;
 
+import EDD.NodoAB;
 import EDD.arbolBinario;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 
 /**
  *
  * @author aleja
  */
 public class Interfaz_clave extends javax.swing.JFrame {
-
+    private arbolBinario arbol;
+    private NodoAB actual;
+    private JLabel preguntaLabel;
+    
     /**
      * Creates new form Interfaz_clave
      * @param arbol
      */
-    public Interfaz_clave(arbolBinario arbol) {
+    public Interfaz_clave(arbolBinario arbol) {  
         initComponents();
-         this.setVisible(true);
+        this.arbol=arbol;
+        this.setVisible(true);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        
     }
 
     /**
@@ -45,8 +53,8 @@ public class Interfaz_clave extends javax.swing.JFrame {
         jTextArea1 = new javax.swing.JTextArea();
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
-        jButton4 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
+        BotonSi = new javax.swing.JButton();
+        BotonNo = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
 
@@ -62,13 +70,13 @@ public class Interfaz_clave extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
-        Especie.setText("Esta es tu planta");
+        Especie.setText("Encuentra tu tipo de planta");
         Especie.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 EspecieActionPerformed(evt);
             }
         });
-        getContentPane().add(Especie, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
+        getContentPane().add(Especie, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
 
         jButton5.setText("Buscar Especie ");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -82,48 +90,51 @@ public class Interfaz_clave extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
-        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, -1, -1));
+        getContentPane().add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(34, 40, 350, -1));
 
         jRadioButton1.setText("Hash");
         getContentPane().add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 140, 20));
 
         jRadioButton2.setText("InOrden");
-        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 250, -1, -1));
+        getContentPane().add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 250, -1, -1));
 
-        jButton4.setText("Si");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
+        BotonSi.setText("Si");
+        BotonSi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
+                BotonSiActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
+        getContentPane().add(BotonSi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 150, -1, -1));
 
-        jButton6.setText("No");
-        jButton6.addActionListener(new java.awt.event.ActionListener() {
+        BotonNo.setText("No");
+        BotonNo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                BotonNoActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
+        getContentPane().add(BotonNo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     private void EspecieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_EspecieActionPerformed
         // TODO add your handling code here:
+        arbol.identificarEspecie();
+        
+        
     }//GEN-LAST:event_EspecieActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+    private void BotonSiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonSiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton4ActionPerformed
+    }//GEN-LAST:event_BotonSiActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+    private void BotonNoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BotonNoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jButton6ActionPerformed
+    }//GEN-LAST:event_BotonNoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -166,15 +177,15 @@ public class Interfaz_clave extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BotonNo;
+    private javax.swing.JButton BotonSi;
     private javax.swing.JButton Especie;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;

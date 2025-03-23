@@ -4,131 +4,130 @@
  */
 package EDD;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import EDD.arbolTransformado;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author aleja
  */
 public class arbolBinario {
+
+    //Primer nodo del arbol
     private NodoAB raiz;
 
+    //constructor de la clase
     public arbolBinario() {
-        this.raiz = raiz;
+        this.raiz = null;
     }
 
-    
-public void contruirArbol(String nombreArbol,ListaSimple<Preguntas> camino){
-        if(camino==null){
+    //contruir el arbol
+    public void contruirArbol(String nombreArbol, ListaSimple<Preguntas> camino) {
+        //verifica que la lista de preguntas no esten vacias
+        if (camino == null) {
             System.out.println("El camino esta vacio");
+            return;
         }
-        if (this.raiz==null){
-            this.raiz=new NodoAB(camino.validarIndice(0).getPregunta());
+        //si el arbol esta vacio lo inicializamos con la primera pregunta
+        if (this.raiz == null) {
+            this.raiz = new NodoAB(camino.validarIndice(0).getPregunta());
         }
-        NodoAB actual=this.raiz;
-        for(int i=0;i<camino.getSize();i++){
-            Preguntas preguntas=camino.validarIndice(i);
-            boolean respuesta=preguntas.isRespuesta();
+        /*Le colocamos el conjunto de preguntas a camino  en 
+        el nodo raiz si no tiene pregungtas asignas*/
+        NodoAB actual = this.raiz;
+        if (actual.getCamino() == null) {
+            actual.setCamino(camino);
+        }
+        
+        //Recorrer cada pregunta
+        for (int i = 0; i < camino.getSize(); i++) {
+            Preguntas preguntas = camino.validarIndice(i);
+            //le asignamos la respuesta
+            boolean respuesta = preguntas.isRespuesta();
             
-            if(i==camino.getSize()-1){
-                if(respuesta){
-                    if(actual.getSi()==null){
-                        actual.setSi(new NodoAB(null));
+            //Se procesa la ultima pregunta del camino
+            if (i == camino.getSize() - 1) {
+                //si la respuesta es true(si) va a la izquierda
+                if (respuesta) {
+                    if (actual.getSi() == null) {
+                        //se crea nodo del arbol
+                        actual.setSi(new NodoAB(nombreArbol));
                     }
-                    actual.getSi().setNombre(nombreArbol);
-                }else{
-                    if(actual.getNo()==null){
-                    actual.setNo(new NodoAB(null));
+                    //si la respuesta es false(no) va a la derecha
+                } else {
+                    if (actual.getNo() == null) {
+                        //se crea nodo del arbol
+                        actual.setNo(new NodoAB(nombreArbol));
                     }
-                    actual.getNo().setNombre(nombreArbol);
+                    
                 }
-            }else{
-                if(respuesta){
-                if(actual.getSi()==null){
-                    actual.setSi(new NodoAB(camino.validarIndice(i+1).getPregunta()));
-                }
-                actual=actual.getSi();
-                }else{
-                    if(actual.getNo()==null){
-                    actual.setNo(new NodoAB(camino.validarIndice(i+1).getPregunta()));
+            } else {
+                //Si no es la ultima pregunta
+                if (respuesta) {
+                    //si la respuesta es true(si) va a la izquierda
+                    if (actual.getSi() == null) {
+                        //se crea nodo del arbol y accedemos a la proxima pregunta 
+                        actual.setSi(new NodoAB(camino.validarIndice(i + 1).getPregunta()));
+                        
                     }
+                    //actual se mueve al hijo izquierdo
+                    actual = actual.getSi();
+                    //se le asigna camino(lista de preguntas) al nodo actual
+                    actual.setCamino(camino);
+            
+                } else {
+                    //si la respuesta es false(no) va a la derecha
+                    if (actual.getNo() == null) {
+                        //se crea nodo del arbol y accedemos a la proxima pregunta 
+                        actual.setNo(new NodoAB(camino.validarIndice(i + 1).getPregunta()));
+                    }
+                    //actual se mueve al hijo derecho
+                    actual = actual.getNo();
+                }
+
+            }
+        }
+
+    }
+//Metodo para identificar la especie    
+    public void identificarEspecie() {
+        //verficamos si la raiz es null
+        if (raiz == null) {
+            JOptionPane.showMessageDialog(null, "El arbol esta vacio");
+            return;
+        }
+        
+        //le asignamos a actual la raiz
+        NodoAB actual = raiz;
+        
+        //recorremos hasta que actual no sea null
+        while (actual != null) {
+           //mostramos la pregunta al usario con un cuadro de dialogo
+            String respuesta = JOptionPane.showInputDialog(null, actual.getNombre()
+                        + "(si/no)");
+            
+             boolean validarRespuesta = false;
+             //si la respuesta es "si" nos movemos a la izquierda
+             if (respuesta.equals("si")) {
+                    validarRespuesta = true;
+                    actual=actual.getSi();
+                 //si la respuesta es "no" nos movemos a la derecha   
+                } else if (respuesta.equals("no")) {
+                    validarRespuesta = false;
                     actual=actual.getNo();
+                } else{
+                      JOptionPane.showMessageDialog(null, "Dato erroneo");
                 }
-                
-            }
-        }
-      
-    }
-//Metodo para     
-public void identificarEspecie(){
-    if(raiz==null){
-        System.out.println("El árbol está vacío.");
-    }
-    NodoAB actual=raiz;
-    BufferedReader reader= new BufferedReader(new InputStreamReader(System.in));
-        try{while(actual!=null){
-            if(actual.getNombre()!=null){
-                System.out.println("La especie identificada es:"+ actual.getNombre());
-                return;
-            }
-            ListaSimple<Preguntas> camino=actual.getCamino();
-            boolean validarCamino=true;
-
-            for(int i=0;i<camino.getSize();i++){
-               Preguntas pregunta=camino.getValor(i);
-               System.out.println(pregunta.getPregunta()+"(si/no)");
-               String respuesta=reader.readLine().trim().toLowerCase();
-
-               boolean validarRespuesta=false;
-                if(respuesta.equals("si")){
-                   validarRespuesta=true;
-                }else if (respuesta.equals("no")){
-                    validarRespuesta=false;
-                }else{
-                   //mendaje de error para respuestas no validas
-                   System.out.println("Dato invalido porfa responde 'si' o 'no'"+
-                           "\nNota:no escriir ni puntos ni espacio");
-                   i--;
-                   continue;
+             
+                //verifica que actual sea hoja
+                if(actual.getSi()==null || actual.getNo()==null){
+                    //le muestra la especie al usuario
+                    JOptionPane.showMessageDialog(null, "La especie identificada es:"
+                        + actual.getNombre());
+                    break;
                 }
-
-                if(validarRespuesta!=pregunta.isRespuesta()){
-                   validarCamino=false;
-                   break;
-                }
-            }
-                if(validarCamino==true){
-                    actual.getSi();
-                }else{
-                    actual=actual.getNo();
-                }  
-        }
-        System.out.println("No se pudo encontrar un especie con esas "
-                + "caracteristicas");
-    }
-    catch(IOException e){
-        System.out.println("Error al leer la entrada del usuario"+e.getMessage());
-    }
-}
     
-    
-    public void imprimirArbol() {
-    if (raiz == null) {
-        System.out.println("El árbol está vacío.");
-    } else {
-        imprimirRecursivo(raiz, "");
-    }
-}
-    private void imprimirRecursivo(NodoAB nodo, String prefijo) {
-        if (nodo != null) {
-            // Imprimir el nombre del nodo actual
-            System.out.println(prefijo + "- " + nodo.getNombre());
+           
+    }}
 
-            // Llamadas recursivas para los nodos 'si' y 'no'
-            imprimirRecursivo(nodo.getSi(), prefijo + "  ");
-            imprimirRecursivo(nodo.getNo(), prefijo + "  ");
-        }
-    }
+    
 }
