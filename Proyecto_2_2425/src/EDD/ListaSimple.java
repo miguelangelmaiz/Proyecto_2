@@ -69,20 +69,45 @@ public class ListaSimple<T> {
         size++;
     }
     
-    public void mostrar(){
-        if (!EsVacio()){
-            Nodo <T> aux = pFirst;
-            String expresion = "Arboles:" + "\n";
-            while(aux != null){
-               expresion = expresion + aux.getDato().toString() + "\n";
-               aux = aux.getPnext();
-            }
-            JOptionPane.showMessageDialog(null,expresion);
-            
-        }else{
-            JOptionPane.showMessageDialog(null, "La lista esta vacia");
+    public void InsertarInicio(T dato){
+        
+        Nodo<T> pNew = new Nodo<>(dato);
+       
+        if (EsVacio()) {   
+            pFirst = pNew;
+        } else{
+            pNew.setPnext(pFirst);
+            pFirst = pNew;
         }
+        size++;
+        
     }
+    
+    public String mostrar(String nodoNombre) {
+    if (!EsVacio()) {
+        Nodo<T> aux = pFirst;
+        String expresion = "Árboles:\n";
+
+        while (aux != null) {
+            String dato = aux.getDato().toString();
+            expresion = expresion + dato + "\n"; // Concatenación tradicional
+
+            // Si encontramos el nodo buscado, detenemos el recorrido
+            if (dato.equals(nodoNombre)) {
+                break;
+            }
+
+            aux = aux.getPnext();
+        }
+
+        return expresion;
+    } else {
+        JOptionPane.showMessageDialog(null, "La lista está vacía");
+        return null;
+    }
+}
+    
+    
     
     public void Eliminar_Final(){
         if(!EsVacio()){

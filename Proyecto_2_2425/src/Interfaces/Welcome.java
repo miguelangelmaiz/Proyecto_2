@@ -119,9 +119,9 @@ public class Welcome extends javax.swing.JFrame {
                 }
 
                 System.out.println("El árbol se construyó correctamente.");
-                arbol.imprimirArbol();
+                
                 Interfaz_clave interfaz = new Interfaz_clave(arbol); // Pasar el árbol cargado
-                this.dispose();
+                interfaz.setVisible(true);
             } catch (Exception e) {
                 System.out.println("Error al leer el archivo JSON: " + e.getMessage());
             }
